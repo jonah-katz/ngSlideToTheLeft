@@ -13,24 +13,16 @@ module.exports = function(grunt) {
     connect: {
       server: {
         options: {
-          port: 8000,
+          port: 8100,
           base: '.'
         }
       }
     },
 
-    // concat all bower components
-    bower_concat: {
-      all: {
-        dest: 'bower_components/_bower.js',
-        cssDest: 'bower_components/_bower.css',
-      }
-    },
-
-    // concat bower componenets and lib js into dist js
+    // concat lib js into dist js
     concat: {
       dist: {
-        src: ['bower_components/_bower.js', 'lib/**/*.js'],
+        src: [ 'lib/**/*.js'],
         dest: 'dist/ng-slide-to-the-left.js'
       }
     },
@@ -96,7 +88,6 @@ module.exports = function(grunt) {
 
   // compile scripts
   grunt.registerTask('compile', [
-    'bower_concat',
     'concat',
     'sass',
     'concat_css',

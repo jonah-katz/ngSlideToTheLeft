@@ -42,7 +42,7 @@ angular.module('ngSlideToTheleft', [])
     } 
 
     function slideToTheLeftDirectiveController ($scope, $element, $attrs) {
-          
+      var anim_time = 300;
       $scope.content_width_i = 0;
 
       /* $timeout ensures DOM is fully loaded */
@@ -68,10 +68,13 @@ angular.module('ngSlideToTheleft', [])
           "left": parseInt(angular.element(document).find('panels').css('left').slice(0, - 2))  - $scope.content_width_i + 'px'
         })
 
-        // not in view panels shouldn't control container height
-        angular.element(document).find("panel").css({
-          "height": "1px"
-        })
+        $timeout(function() {
+          var all_panels = angular.element(document).find("panel");
+          // not in view panels shouldn't control container height
+          angular.element(angular.element(document).find("panel")[all_panels.length-2]).css({
+            "height": "1px"
+          })
+        },anim_time)
 
         angular.element(document).find("panels").append(panel);
 
@@ -95,7 +98,7 @@ angular.module('ngSlideToTheleft', [])
           });
                     
 
-        },300);
+        },anim_time);
       }
     }
   }

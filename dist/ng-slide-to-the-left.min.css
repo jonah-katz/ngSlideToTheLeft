@@ -1,1 +1,1 @@
-body{background-color:#00f}
+slide-to-the-left{position:relative;overflow:hidden;width:100%;display:block}slide-to-the-left panels{position:relative;top:0;left:0;height:100%;-webkit-transition:left .3s ease;-moz-transition:left .3s ease;-ms-transition:left .3s ease;-o-transition:left .3s ease;transition:left .3s ease;display:block}slide-to-the-left panels panel{float:left;overflow-y:auto;display:block;height:100%}

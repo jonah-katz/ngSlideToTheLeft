@@ -1,29 +1,82 @@
 <!doctype html>
 <html ng-app="JonahKatz">
   <head>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="dist/ng-slide-to-the-left.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style media="screen">
-      body {
-        margin: 100px;
+      slide-to-the-left {
+        border-radius: 5px;
+        border:1px solid green;
+        width: 400px;
+        height: 200px;
+        margin-top: 20px;
+        margin-left: -15px;
       }
-      #demo-container > div {
-        margin: 10% 0;
-        text-align: center;
+
+      p:last-child {
+        margin-bottom: 0px;
       }
-      .a-class {
-        font-size: 2em;
+
+      div.panel-content {
+        padding:20px;
+        min-height: 100%;
+        color:white;
       }
-      .another-class {
-        color: violet;
+
+      div.panel-content p:hover {
+        cursor: pointer;
+        text-decoration: underline;
       }
+
+
+      div.panel-content.sports {
+        background-color: #318FEA;
+      }
+
+      div.panel-content.divisions {
+        background-color: #F1302D;
+      }
+
+      div.panel-content.teams {
+        background-color: #FFFF4E;
+        color: #647D62;
+      }
+
+      p.btn {
+        float:right;
+      }
+
+
     </style>
+
     <title>ngSlideToTheLeft</title>
   </head>
-  <body id="demo-container" ng-controller="DemoCtrl as demoCtrlVm">
-    
+  <body  ng-controller="DemoCtrl as demoCtrlVm">
+    <div class="container">
+      <div class="row">
+        <h2>ngSlideToTheLeft Demo</h2>
+        <p class="lead">ngSlideToTheLeft is an Angular module for creating dynamic and trigerrable, sliding panels. <a target="_blank" href="https://github.com/jonah-katz/ngSlideToTheLeft">View on Github</a></p>
+      </div>
+
+      <div class="row">
+        <h4>Example</h4>
+        <p>Navigate the hierarchy of Sport leagues, conferences, and teams.</p>
+      </div>
+
+      <slide-to-the-left>
+        <div class="panel-content sports">
+          <p ng-click="demoCtrlVm.openSport(sport)" ng-repeat="sport in demoCtrlVm.sports">{{ sport.name}}</p>
+        </div>
+      </slide-to-the-left>
+
+    </div>
 
     <script type="text/javascript" src="/dist/ng-slide-to-the-left.js"></script>
     <script type="text/javascript" src="/demo/index.js"></script>
+    <script type="text/javascript" src="/demo/divisions.controller.js"></script>
+    <script type="text/javascript" src="/demo/teams.controller.js"></script>
   </body>
 </html>

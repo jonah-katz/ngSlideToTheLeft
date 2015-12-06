@@ -1,0 +1,6 @@
+<div class="panel-content teams" ng-controller="TeamsController as TeamsCtrlVM">
+
+	<p class="btn right btn-info" ng-click="TeamsCtrlVM.closePanel()">Back</p>
+	<p  ng-repeat="team in TeamsCtrlVM.teams">{{ team }}</p>
+	
+</div>

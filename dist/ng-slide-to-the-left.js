@@ -29035,6 +29035,86 @@ angular.module('ngSlideToTheleft', [])
 /**
  * slideToTheleft Directive
  * @description  <
+ *                 <slide-to-the-left>
+ *                   <transcluded content/home panel>
+ *                 </slide-to-the-left>
+ *                 
+   */
+(function() {
+    'use strict';
+
+  angular
+    .module('ngSlideToTheleft')
+    .directive('slideToTheLeft', ['SlideToTheLeftRemote','$compile','$timeout','$window',SlideToTheLeft]);
+
+  function SlideToTheLeft(SlideToTheLeftRemote,$compile,$timeout,$window) {
+    return {
+        restrict: 'E',
+        transclude:true,
+        scope: false,
+        template: '<panels style="left:0px;"ng-style="{width: content_width_i+\'px\'}" >'+
+                    '<panel ng-style="{width: content_width_i+\'px\'}"  ng-transclude>'+
+                    '</panel>'+
+                  '</panels>',
+        controller: ['$scope', '$element', '$attrs',slideToTheLeftDirectiveController]
+    } 
+
+    function slideToTheLeftDirectiveController ($scope, $element, $attrs) {
+          
+      $scope.content_width_i = 0;
+
+      /* $timeout ensures DOM is fully loaded */
+      $timeout(function() {
+          $scope.content_width_i = $element[0].clientWidth;
+      });
+
+      /* triggers */
+      SlideToTheLeftRemote.sliderDirectiveOpen(_openNewPanel);
+      SlideToTheLeftRemote.sliderDirectiveClose(_closePanel);
+
+      /**
+       * _openNewPanel - Add a panel to our slider and slide it open
+       * @param  {String} src URL of template to load
+       */
+      function _openNewPanel(src) {
+    
+
+        var panel = angular.element('<panel ng-include="\''+src+'\'"  style="width:'+($scope.content_width_i)+'px;"></panel>');
+
+        angular.element(document).find("panels").css({
+          "width": parseInt(angular.element(document).find('panels').css('width').slice(0, - 2)) + $scope.content_width_i + 'px',
+          "left": parseInt(angular.element(document).find('panels').css('left').slice(0, - 2))  - $scope.content_width_i + 'px'
+        })
+
+
+        angular.element(document).find("panels").append(panel);
+
+        $compile(panel)($scope)
+      }
+
+      function _closePanel() {
+        angular.element(document).find("panels").css({
+          "left": parseInt(angular.element(document).find('panels').css('left').slice(0, - 2))  + $scope.content_width_i + 'px'
+        });
+
+        $timeout(function() {
+          var panels  = angular.element(document).find("panel");
+         panels[panels.length - 1].remove();
+          console.log("HM")
+          angular.element(document).find("panels").css({
+            "width": parseInt(angular.element(document).find('panels').css('width').slice(0, - 2)) - $scope.content_width_i + 'px'
+          });
+                    
+
+        },300);
+      }
+    }
+  }
+
+})();
+/**
+ * slideToTheleft Directive
+ * @description  <
  *                 <slide-to-the-left slide-to="'right'"  panel-class="'blue'"><transcluded content/home panel></slide-to-the-left>
  */
 
@@ -29048,10 +29128,16 @@ angular.module('ngSlideToTheleft', [])
 
     var self = this;
     
+    // talk to directive
+    // these functions are used by the directive only
     this.sliderDirectiveOpen = sliderDirectiveOpen;
-    this.onCloseSlider = onCloseSlider;
+    this.sliderDirectiveClose = sliderDirectiveClose;
+
+    // open/close remote
     this.openPanel = openPanel;
     this.closePanel = closePanel;
+
+    // recieve data to be passed to controller
     this.getCarePackage = getCarePackage;
 
 
@@ -29060,7 +29146,7 @@ angular.module('ngSlideToTheleft', [])
       sliderOpener = cb;
     }
 
-    function onCloseSlider(cb) {
+    function sliderDirectiveClose(cb) {
       sliderCloser = cb;
     }
 
@@ -29081,86 +29167,4 @@ angular.module('ngSlideToTheleft', [])
     return self;
 
   }
-})();
-/**
- * slideToTheleft Directive
- * @description  <
- *                 <slide-to-the-left slide-to="'right'"  panel-class="'blue'">
- *                   <transcluded content/home panel>
- *                 </slide-to-the-left>
- *                 
-   */
-(function() {
-    'use strict';
-
-  angular
-    .module('ngSlideToTheleft')
-    .directive('slideToTheleft', ['slideTheLeftRemote','$compile','$timeout',SlideToTheLeft]);
-
-  function SlideToTheLeft(slideTheLeftRemote,$compile,$timeout) {
-    return {
-        restrict: 'E',
-        transclude:true,
-        scope: false,
-        template: '<panels class="clearfix" style="height:100%;display:block;width:{{ content_width_i+1 }}px;">'+
-                    '<panel style="width: {{ content_width_i }}px;height:100%;" ng-transclude>'+
-                    '</panel>'+
-                  '</panels>',
-        controller: ['$scope', '$element', '$attrs',slideToTheLeftDirectiveController]
-    } 
-
-    function slideToTheLeftDirectiveController ($scope, $element, $attrs) {
-          
-      $scope.content_width_i = 0;
-
-      /* $timeout ensures DOM is fully loaded */
-      $timeout(function() {
-          $scope.content_width_i = $element[0].clientWidth;
-      });
-
-      /* triggers */
-      ContentSliderRemote.onOpenSlider(_openNewPanel);
-      ContentSliderRemote.onCloseSlider(_closePanel);
-
-      /**
-       * _openNewPanel - Add a panel to our slider and slide it open
-       * @param  {String} src URL of template to load
-       */
-      function _openNewPanel(src) {
-    
-        angular.$element("panel").css("height", "1px");
-        var panel = angular.element('<panel ng-include="\''+src+'\'"  style="width:'+($scope.content_width_i)+'px;"></panel>');
-
-        angular.$element("panels").css({
-          "width": "+="+($scope.content_width_i+1),
-          "left": "-="+($scope.content_width_i+1)
-        })
-        angular.$element("panels").append(panel);
-    
-        $compile(panel)($scope);
-
-        $(window).trigger('resize');
-
-      }
-
-      function _closePanel() {
-        angular.$element("panels").css({
-          "left": "+="+($scope.content_width_i+1)
-        });
-
-        /* when open, the cover panel has an inline height style. hidden panels shouldn't */
-        angular.$element("panel:nth-last-child(2)").css({
-          "height": ""
-        });
-
-        $timeout(function() {
-          angular.$element("panel:last-child").remove();
-          angular.$element("panels").css({
-            "width": "-="+($scope.content_width_i+1)
-          });
-        },300)
-      }
-    }
-  }
-
 })();

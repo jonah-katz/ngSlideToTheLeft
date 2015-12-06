@@ -42,7 +42,9 @@ angular.module('ngSlideToTheleft', [])
     } 
 
     function slideToTheLeftDirectiveController ($scope, $element, $attrs) {
-      var anim_time = 300;
+      var anim_time = 300,
+      $panels = angular.element(document).find("panels");
+
       $scope.content_width_i = 0;
 
       /* $timeout ensures DOM is fully loaded */
@@ -59,15 +61,19 @@ angular.module('ngSlideToTheleft', [])
        * @param  {String} src URL of template to load
        */
       function _openNewPanel(src) {
-    
 
         var panel = angular.element('<panel ng-include="\''+src+'\'"  style="width:'+($scope.content_width_i)+'px;"></panel>');
 
-        angular.element(document).find("panels").css({
-          "width": parseInt(angular.element(document).find('panels').css('width').slice(0, - 2)) + $scope.content_width_i + 'px',
-          "left": parseInt(angular.element(document).find('panels').css('left').slice(0, - 2))  - $scope.content_width_i + 'px'
+        // panels container needs to increase in width to hold the new panel and
+        // needs to move over to display it. 
+        // This triggere animation via CSS
+        $panels.css({
+          "width": _getCSSWithoutPixels($panels,'width') + $scope.content_width_i + 'px',
+          "left": _getCSSWithoutPixels($panels,'left')  - $scope.content_width_i + 'px'
         })
 
+        // not in view panels shouldn't control container height
+        // only care about the second to last one any given time
         $timeout(function() {
           var all_panels = angular.element(document).find("panel");
           // not in view panels shouldn't control container height
@@ -76,29 +82,41 @@ angular.module('ngSlideToTheleft', [])
           })
         },anim_time)
 
-        angular.element(document).find("panels").append(panel);
-
+        // actually add the new panel
+        $panels.append(panel);
         $compile(panel)($scope)
       }
 
+      /**
+       * _closePanel - Remove visible panel by sliding to the right than removing it from the DOM
+       */
       function _closePanel() {
-        angular.element(document).find("panels").css({
-          "left": parseInt(angular.element(document).find('panels').css('left').slice(0, - 2))  + $scope.content_width_i + 'px'
+
+        // move panels over.
+        // trigger animation via CSS
+        $panels.css({
+          "left": _getCSSWithoutPixels($panels,'left')  + $scope.content_width_i + 'px'
         });
 
         // panel that will in the front needs its original height
         var all_panels = angular.element(document).find("panel");
         angular.element(angular.element(document).find("panel")[all_panels.length - 2]).css({height: 'inherit'});
 
+        // when done moving over, remove last panel
         $timeout(function() {
           var panels  = angular.element(document).find("panel");
          panels[panels.length - 1].remove();
-          angular.element(document).find("panels").css({
-            "width": parseInt(angular.element(document).find('panels').css('width').slice(0, - 2)) - $scope.content_width_i + 'px'
+          $panels.css({
+            "width": _getCSSWithoutPixels($panels,'width') - $scope.content_width_i + 'px'
           });
                     
 
         },anim_time);
+      }
+
+      // helper for getting a CSS style as a number instead of string (ie 398 vs "398px")
+      function _getCSSWithoutPixels(elem,of) {
+        return parseInt(elem.css(of).slice(0, - 2));
       }
     }
   }

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAyBA,IAAK;EACJ,gBAAgB,EAAE,IAAI",
+"sources": ["../lib/scss/ng-slide-to-the-left.scss"],
+"names": [],
+"file": "ng-slide-to-the-left.css"
+}

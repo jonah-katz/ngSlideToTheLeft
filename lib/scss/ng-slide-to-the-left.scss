@@ -1,0 +1,58 @@
+// @import '../../scss_helpers/global_scss';
+
+
+// body content-slider {
+//     position:relative;
+//     overflow:hidden;
+//     width: $content-width;
+//     @include mq(mobile) {
+//         width:100%;
+//         height: 100%;
+//         min-height: initial;
+//     }
+// }
+
+
+// body content-slider  panels {
+//     position:relative;
+//     top:0px;
+//     left:-1px;//account for scrollbar
+//     max-height: 682px;
+//     @include transition(left .3s ease);
+//     @include mq(mobile) {
+//         height: 100%;
+//     }
+// }
+body {
+	background-color: blue;
+}
+
+
+// body  panels panel {
+// 	float:left;
+//   overflow-y: auto;
+//     max-height: 682px;
+//   margin-left:1px;//to not let scrollbar leak
+// }
+
+// body  .first.panel {
+//     display:block;
+//     position:relative;
+//     top:0px;
+//     left:0px;
+// }
+
+
+
+// body  .second.panel {
+//     position:relative;
+//     @include mq(mobile) {
+
+//     }
+// }
+
+// body  .second.panel .panel {
+//     @include mq(mobile) {
+//         width: 100%;
+//     }
+// }

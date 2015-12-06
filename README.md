@@ -1,2 +1,2 @@
 # ngSlideToTheLeft
-AngularJS module for creating dynamic and trigerrable, sliding panels.
+AngularJS module for creating dynamic and triggerable, sliding panels.

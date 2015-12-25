@@ -8,7 +8,8 @@ ngSlideToTheLeft is a killer AngularJS module for creating dynamic, and triggera
 AngularJS v1.3+
 
 ##Screen
-![ngSlideToTheLeft](http://google.com)
+
+![Demo](https://raw.githubusercontent.com/jonah-katz/ngSlideToTheLeft/master/demo_animation.gif)
 
 ###Browser support
 

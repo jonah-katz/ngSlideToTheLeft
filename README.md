@@ -123,16 +123,16 @@ ngSlideToTheLeft comes with minimal styling (really, nothing at all). The tranis
 Contribution welcome. Just fork, work and open a PR.
   
   ### To do
-    * directive parameters
-      * slide speed
-      * slide direction
-    * event broadcasts/callbacks
-      * opened
-      * closed
-      * opening
-      * closing
-      * will open
-      * will close
+    1. directive parameters
+      ..* slide speed
+      ..* slide direction
+    2. event broadcasts/callbacks
+      ..* opened
+      ..* closed
+      ..* opening
+      ..* closing
+      ..* will open
+      ..* will close
 
 
 

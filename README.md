@@ -20,9 +20,22 @@ AngularJS v1.3+
 
 And mobile!
 
-## Load
+## Installation
 
-To use nfSlideToTheLeft include the (un)minified js and css files.
+####Bower
+
+
+```
+$ bower install ngSlideToTheLeft --save
+```
+
+
+## Use
+
+####Add module dependency
+
+Include files:
+
 ```html
 <!DOCTYPE HTML>
 <html>
@@ -38,16 +51,6 @@ To use nfSlideToTheLeft include the (un)minified js and css files.
 </html>
 ```
 
-##Installation
-
-####Bower
-
-```
-$ bower install ngSlideToTheLeft --save
-```
-
-_then load the js files in your html_
-
 ####Add module dependency
 
 Add the 720kb.tooltips module dependency
@@ -57,6 +60,8 @@ angular.module('app', [
   'ngSlideToTheleft'
  ]);
 ```
+
+#### Load slider
 
 Wrap your 'first slide' with the ngSlideToTheLeft directive. Make sure your panel (and all panels) have exactly one root element.
 
@@ -71,6 +76,7 @@ Wrap your 'first slide' with the ngSlideToTheLeft directive. Make sure your pane
   </div>
   
 ```
+#### Trigger opening/closing panels using `SlideToTheLeftRemote`
 
 Open any additional slides using the `SlideToTheLeftRemote` service.
 
